@@ -14,16 +14,15 @@ const getLastSixMonthsDates = () => {
   };
 
 interface EmissionData {
-  // Assuming the structure of emission data returned by the API
   co2: number;
   date: string;
 }
 
-interface EmissionsDataComponentProps {
-  country: string; // Add a prop for country selection
+interface EmissionsDataProps {
+  country: string;
 }
 
-const EmissionsDataComponent: React.FC<EmissionsDataComponentProps> = ({ country }) => {
+const EmissionsData: React.FC<EmissionsDataProps> = ({ country }) => {
   const [emissionData, setEmissionData] = useState<EmissionData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +41,8 @@ const EmissionsDataComponent: React.FC<EmissionsDataComponentProps> = ({ country
         setLoading(false);
       })
       .catch(error => {
-        setError('Failed to fetch emission data');
+        const errorMessage = error.response?.data?.message || 'Failed to fetch emission data';
+        setError(errorMessage);
         setLoading(false);
       });
   }, [country, end, start]); // Rerun the effect if the country prop changes
@@ -68,4 +68,4 @@ const EmissionsDataComponent: React.FC<EmissionsDataComponentProps> = ({ country
   );
 };
 
-export default EmissionsDataComponent;
+export default EmissionsData;

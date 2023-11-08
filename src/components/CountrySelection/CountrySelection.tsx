@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import csvtojson from 'csvtojson';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCountries } from '../../features/countries/countriesAPI';
+import { AppDispatch, RootState } from '../../app/store';
 
 interface CountrySelectionProps {
-  onCountrySelect: (country: string) => void;
+  onCountrySelect: (countryCode: string) => void;
 }
 
 interface Country {
@@ -12,47 +13,24 @@ interface Country {
 }
 
 const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) => {
-  const [countries, setCountries] = useState<Country[]>([]);
+  const dispatch: AppDispatch = useDispatch();
+  const { list: countries, loading, error } = useSelector((state: RootState) => state.countries);
   const [selectedCountry, setSelectedCountry] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // We are directly fetching the CSV file in this example
-    const csvUrl = 'https://datahub.io/core/country-list/r/data.csv';
-
-    axios.get(csvUrl)
-      .then(response => {
-        // axios doesn't automatically parse CSV files, so we do it manually
-        return csvtojson().fromString(response.data);
-      })
-      .then(jsonData => {
-        console.log(jsonData); // log to see the structure and confirm data is received
-        // Transform the jsonData to the structure expected by our component
-        const formattedCountries = jsonData.map((item: any) => ({
-          name: item.Name, // Adjust based on actual keys from jsonData
-          code: item.Code, // Adjust based on actual keys from jsonData
-        }));
-        setCountries(formattedCountries);
-      })
-      .catch(error => {
-        setError('Error fetching countries');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    // Fetch countries only once when the component mounts
+    dispatch(fetchCountries());
+  }, [dispatch]);
 
   const handleCountrySelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = event.target.value;
-    setSelectedCountry(selected);
-  };
-
-  const handleCountrySubmit = () => {
-    if (selectedCountry) {
-      onCountrySelect(selectedCountry);
-    } else {
-      alert('Please select a country before proceeding.');
+    const selectedName = event.target.value;
+    setSelectedCountry(selectedName);
+    
+    // Immediately find and use the country code to call onCountrySelect
+    const countryObject = countries.find(c => c.name === selectedName);
+    const countryCode = countryObject ? countryObject.code : '';
+    if (countryCode) {
+      onCountrySelect(countryCode);
     }
   };
 
@@ -68,17 +46,14 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
     <div className="country-selection-page">
       <h2>Select a Country</h2>
       <p>Choose a country to analyze its carbon emissions data.</p>
-
       <select onChange={handleCountrySelect} value={selectedCountry}>
         <option value="">Select a Country</option>
-        {countries.map((country) => (
+        {countries.map((country: Country) => (
           <option key={country.code} value={country.name}>
             {country.name}
           </option>
         ))}
       </select>
-
-      <button onClick={handleCountrySubmit}>Submit</button>
     </div>
   );
 };
