@@ -10,30 +10,34 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-export interface EmissionData {
-  year: number;
-  value: number;
+interface EmissionData {
+  average: number;
+  start: string; // in this context, start represents a single day
+  end: string;   // unused here, but we keep it for consistency
 }
 
 interface EmissionsChartProps {
-  country: string;
-  startDate: string;
-  endDate: string;
   data: EmissionData[];
 }
 
 const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
-  // This component is now purely presentational and only renders the chart based on provided data
-
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={data}>
+      <LineChart
+        data={data}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
+        <XAxis dataKey="start" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="average" stroke="#8884d8" activeDot={{ r: 8 }} />
       </LineChart>
     </ResponsiveContainer>
   );

@@ -1,21 +1,16 @@
+// DataFetcher.tsx
 import React, { useState } from 'react';
 import CountrySelection from '../CountrySelection/CountrySelection';
 import DateInput from '../DateInput/DateInput';
 import EmissionsChart from '../EmissionsChart/EmissionsChart';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { fetchEmissionsByCountry } from '../../features/emissions/emissionsAPI';
-import { AppDispatch } from 'src/app/store';
-import { RootState } from 'src/app/store';
+import { RootState, useAppDispatch } from '../../app/store';
 
 const DataFetcher: React.FC = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const [country, setCountry] = useState<string>('');
-    const [dates, setDates] = useState<{ startDate: string; endDate: string }>({
-        startDate: '',
-        endDate: '',
-    });
-    
-    // Consolidate state selection
+    const [dates, setDates] = useState<{ startDate: string; endDate: string }>({ startDate: '', endDate: '' });
     const { data, loading, error } = useSelector((state: RootState) => state.emissions);
 
     const handleCountrySelect = (selectedCountry: string) => {
@@ -26,33 +21,27 @@ const DataFetcher: React.FC = () => {
         setDates(selectedDates);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         if (!country || !dates.startDate || !dates.endDate) {
             alert('Please select a country and date range.');
             return;
         }
-        
-        await dispatch(fetchEmissionsByCountry({ 
-            country, 
-            startDate: dates.startDate, 
-            endDate: dates.endDate 
-        }));
+        // Correctly dispatch the action, no need to await as dispatch can handle the promise itself
+        dispatch(fetchEmissionsByCountry({ country, startDate: dates.startDate, endDate: dates.endDate }));
     };
+
+    // No need to transform data, assume the EmissionsChart expects the same shape as the API response
+    // and the redux state stores.
 
     return (
         <div>
             <CountrySelection onCountrySelect={handleCountrySelect} />
             <DateInput onDatesChange={handleDatesChange} />
-            <button onClick={handleSubmit}>Fetch Data</button>
+            <button onClick={handleSubmit} disabled={loading}>Fetch Data</button>
             {loading && <div>Loading...</div>}
             {error && <div>Error: {error}</div>}
-            {!loading && !error && data.length > 0 && (
-                <EmissionsChart 
-                    country={country} 
-                    startDate={dates.startDate} 
-                    endDate={dates.endDate}
-                    data={data} // Assume EmissionsChart can receive data as a prop
-                />
+            {!loading && !error && data && data.length > 0 && (
+                <EmissionsChart data={data} />
             )}
         </div>
     );

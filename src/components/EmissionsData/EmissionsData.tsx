@@ -1,51 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-const getLastSixMonthsDates = () => {
-    const end = new Date();
-    const start = new Date(new Date().setMonth(end.getMonth() - 6));
-  
-    const formatDate = (date: Date) => date.toISOString().split('T')[0];
-  
-    return {
-      start: formatDate(start),
-      end: formatDate(end),
-    };
-  };
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchEmissionsByCountry } from 'src/features/emissions/emissionsAPI';
 
 interface EmissionData {
-  co2: number;
-  date: string;
+  average: number;
+  start: string;
+  end: string;
+}
+
+interface RootState {
+  emissions: {
+    data: EmissionData[];
+    loading: boolean;
+    error: string | null;
+  };
 }
 
 interface EmissionsDataProps {
   country: string;
+  startDate: string;
+  endDate: string; 
 }
 
-const EmissionsData: React.FC<EmissionsDataProps> = ({ country }) => {
-  const [emissionData, setEmissionData] = useState<EmissionData[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const { start, end } = getLastSixMonthsDates();
+const EmissionsData: React.FC<EmissionsDataProps> = ({ country, startDate, endDate }) => {
+  const dispatch = useDispatch();
+  const { data: emissionData, loading, error } = useSelector((state: RootState) => state.emissions);
 
   useEffect(() => {
-    // If there is no country selected, don't attempt to fetch data
-    if (!country) return;
-
-    const endpoint = `https://api.v2.emissions-api.org/api/v2/carbonmonoxide/average.json?country=${country}&begin=${start}&end=${end}`;
-
-    axios.get(endpoint)
-      .then(response => {
-        setEmissionData(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        const errorMessage = error.response?.data?.message || 'Failed to fetch emission data';
-        setError(errorMessage);
-        setLoading(false);
-      });
-  }, [country, end, start]); // Rerun the effect if the country prop changes
+    if (country && startDate && endDate) {
+      //dispatch(fetchEmissionsByCountry({ country, startDate, endDate }));
+    }
+  }, [country, startDate, endDate, dispatch]);
 
   if (loading) {
     return <div>Loading emission data...</div>;
@@ -60,8 +45,9 @@ const EmissionsData: React.FC<EmissionsDataProps> = ({ country }) => {
       <h2>Emission Data for {country}</h2>
       {emissionData.map((data, index) => (
         <div key={index}>
-          <p>Date: {data.date}</p>
-          <p>CO2: {data.co2}</p>
+          <p>Start Date: {data.start}</p>
+          <p>End Date: {data.end}</p>
+          <p>Average CO2: {data.average}</p>
         </div>
       ))}
     </div>

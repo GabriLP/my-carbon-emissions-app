@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { fetchCountries } from '../../features/countries/countriesAPI';
-import { AppDispatch, RootState } from '../../app/store';
+import { useAppDispatch, RootState } from '../../app/store';
 
 interface CountrySelectionProps {
   onCountrySelect: (countryCode: string) => void;
@@ -13,7 +13,7 @@ interface Country {
 }
 
 const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { list: countries, loading, error } = useSelector((state: RootState) => state.countries);
   const [selectedCountry, setSelectedCountry] = useState<string>('');
 

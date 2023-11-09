@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 interface DateInputProps {
   onDatesChange: (dates: { startDate: string; endDate: string }) => void;
@@ -8,12 +8,23 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
 
-  // Trigger the onDatesChange callback whenever startDate or endDate changes
-  useEffect(() => {
-    if (startDate && endDate) {
-      onDatesChange({ startDate, endDate });
+  const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newStartDate = event.target.value;
+    setStartDate(newStartDate);
+    // Only call onDatesChange if endDate is already set
+    if (endDate) {
+      onDatesChange({ startDate: newStartDate, endDate });
     }
-  }, [startDate, endDate, onDatesChange]);
+  };
+
+  const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newEndDate = event.target.value;
+    setEndDate(newEndDate);
+    // Only call onDatesChange if startDate is already set
+    if (startDate) {
+      onDatesChange({ startDate, endDate: newEndDate });
+    }
+  };
 
   return (
     <div>
@@ -22,7 +33,7 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
         <input
           type="date"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={handleStartDateChange}
         />
       </label>
       <label>
@@ -30,7 +41,7 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
         <input
           type="date"
           value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          onChange={handleEndDateChange}
         />
       </label>
     </div>
