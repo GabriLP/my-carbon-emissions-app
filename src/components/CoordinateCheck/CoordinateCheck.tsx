@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Define the props type
 interface CoordinateCheckPageProps {
@@ -8,12 +8,11 @@ interface CoordinateCheckPageProps {
 const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateCheck }) => {
   const [latitude, setLatitude] = useState<string>('');
   const [longitude, setLongitude] = useState<string>('');
+  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
 
   const isValidCoordinate = (value: string, type: 'latitude' | 'longitude') => {
     const num = parseFloat(value);
-    if (isNaN(num)) return false;
-
-    return type === 'latitude' ? num >= -90 && num <= 90 : num >= -180 && num <= 180;
+    return !isNaN(num) && (type === 'latitude' ? num >= -90 && num <= 90 : num >= -180 && num <= 180);
   };
 
   const handleLatitudeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,20 +23,17 @@ const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateC
     setLongitude(event.target.value);
   };
 
-  const handleCheckCoordinates = () => {
-    if (!isValidCoordinate(latitude, 'latitude')) {
-      alert('Please enter a valid latitude within the range -90 to 90.');
-      return;
-    }
-    
-    if (!isValidCoordinate(longitude, 'longitude')) {
-      alert('Please enter a valid longitude within the range -180 to 180.');
+  useEffect(() => {
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
       return;
     }
 
-    // We can safely assert that these are numbers after our validation
-    onCoordinateCheck(parseFloat(latitude), parseFloat(longitude));
-  };
+    if (isValidCoordinate(latitude, 'latitude') && isValidCoordinate(longitude, 'longitude')) {
+      onCoordinateCheck(parseFloat(latitude), parseFloat(longitude));
+    }
+
+  }, [latitude, longitude, onCoordinateCheck, isFirstLoad]);
 
   return (
     <div className="coordinate-check-page">
@@ -58,8 +54,6 @@ const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateC
           onChange={handleLongitudeChange}
         />
       </div>
-
-      <button onClick={handleCheckCoordinates}>Check Emissions</button>
     </div>
   );
 };

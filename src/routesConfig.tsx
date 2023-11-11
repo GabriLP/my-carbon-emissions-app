@@ -1,5 +1,5 @@
 import Dashboard from './components/Dashboard/Dashboard';
-import CoordinateCheck from './components/CoordinateCheck/CoordinateCheck';
+import EmissionsCoordinate from './components/EmissionsCoordinate/EmissionsCoordinate';
 import HistoricalGraph from './components/HistoricalGraph/HistoricalGraph';
 import EducationalContent from './components/EducationalContent/EducationalContent';
 import DataFetcher from './components/DataFetcher/DataFetcher';
@@ -28,7 +28,7 @@ const routesConfig: {
   },
   {
     path: '/coordinate',
-    render: (props) => <CoordinateCheck onCoordinateCheck={props.handleCoordinateCheck} />,
+    render: (props) => <EmissionsCoordinate />,
     name: 'CoordinateCheck',
   },
   {

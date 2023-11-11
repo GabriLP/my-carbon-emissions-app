@@ -8,7 +8,6 @@ export interface EmissionData {
   end: string;
 }
 
-// Assuming the base URL for the emissions API
 const EMISSIONS_API_BASE_URL = 'https://api.v2.emissions-api.org/api/v2';
 
 export const fetchEmissionsByCountry = createAsyncThunk<EmissionData[], { country: string; startDate: string; endDate: string }>(
@@ -34,8 +33,10 @@ export const fetchEmissionsByCoordinates = createAsyncThunk<EmissionData[], { la
   'emissions/fetchByCoordinates',
   async ({ lat, lng, startDate, endDate }, thunkAPI) => {
     try {
+      const point = `${lng},${lat}`;
+
       const response = await axios.get(`${EMISSIONS_API_BASE_URL}/carbonmonoxide/average.json`, {
-        params: { lat, lng, start: startDate, end: endDate },
+        params: { point, begin: startDate, end: endDate },
       });
       return response.data;
     } catch (error) {

@@ -11,18 +11,22 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
   const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newStartDate = event.target.value;
     setStartDate(newStartDate);
-    // Only call onDatesChange if endDate is already set
     if (endDate) {
-      onDatesChange({ startDate: newStartDate, endDate });
+      onDatesChange({
+        startDate: (newStartDate),
+        endDate: (endDate),
+      });
     }
   };
 
   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newEndDate = event.target.value;
     setEndDate(newEndDate);
-    // Only call onDatesChange if startDate is already set
     if (startDate) {
-      onDatesChange({ startDate, endDate: newEndDate });
+      onDatesChange({
+        startDate: (startDate),
+        endDate: (newEndDate),
+      });
     }
   };
 
