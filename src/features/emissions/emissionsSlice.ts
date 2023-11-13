@@ -17,7 +17,7 @@ export const emissionsSlice = createSlice({
   name: 'emissions',
   initialState,
   reducers: {
-    
+    // ... (your existing reducers, if any)
   },
   extraReducers: (builder) => {
     builder
@@ -27,7 +27,11 @@ export const emissionsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchEmissionsByCountry.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.data = action.payload.sort((a, b) => {
+          const dateA = new Date(a.start).getTime();
+          const dateB = new Date(b.start).getTime();
+          return dateA - dateB;
+        });
         state.loading = false;
       })
       .addCase(fetchEmissionsByCountry.rejected, (state, action) => {
@@ -40,7 +44,11 @@ export const emissionsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchEmissionsByCoordinates.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.data = action.payload.sort((a, b) => {
+          const dateA = new Date(a.start).getTime();
+          const dateB = new Date(b.start).getTime();
+          return dateA - dateB;
+        });
         state.loading = false;
       })
       .addCase(fetchEmissionsByCoordinates.rejected, (state, action) => {

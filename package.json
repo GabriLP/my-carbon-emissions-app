@@ -5,6 +5,7 @@
   "homepage": "",
   "proxy": "http://api.v2.emissions-api.org",
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.14.15",
     "@mui/styles": "^5.14.15",

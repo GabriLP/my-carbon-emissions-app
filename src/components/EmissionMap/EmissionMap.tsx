@@ -1,10 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import '../../../node_modules/leaflet/dist/leaflet.css';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import ReactDOMServer from 'react-dom/server';
 
 interface EmissionsMapProps {
   onCoordinateSelect: (latitude: number, longitude: number) => void;
 }
+
+const createMaterialIcon = () => {
+  const iconElement = <LocationOnIcon style={{ fontSize: '40px', color: 'red' }} />;
+  return ReactDOMServer.renderToString(iconElement);
+};
+
+const materialIconHtml = createMaterialIcon();
+const materialIcon = L.divIcon({
+  html: materialIconHtml,
+  iconSize: L.point(40, 40),
+  className: ''
+});
 
 const EmissionsMap: React.FC<EmissionsMapProps> = ({ onCoordinateSelect }) => {
   const mapRef = useRef<L.Map | null>(null);
@@ -12,7 +26,6 @@ const EmissionsMap: React.FC<EmissionsMapProps> = ({ onCoordinateSelect }) => {
 
   useEffect(() => {
     if (!mapRef.current) {
-      // Initialize the map only once
       mapRef.current = L.map('map', {
         center: [0, 0],
         zoom: 2
@@ -27,22 +40,18 @@ const EmissionsMap: React.FC<EmissionsMapProps> = ({ onCoordinateSelect }) => {
     const onMapClick = (e: L.LeafletMouseEvent) => {
       const { lat, lng } = e.latlng;
 
-      // Add or move the marker
       if (markerRef.current) {
         markerRef.current.setLatLng(e.latlng);
       } else {
-        markerRef.current = L.marker(e.latlng).addTo(mapRef.current as L.Map);
+        markerRef.current = L.marker(e.latlng, { icon: materialIcon }).addTo(mapRef.current as L.Map);
       }
 
-      // Trigger the callback with the selected coordinates
       onCoordinateSelect(lat, lng);
     };
 
-    // Attach click event listener
     mapRef.current.on('click', onMapClick);
 
     return () => {
-      // Clean up: Remove event listener
       if (mapRef.current) {
         mapRef.current.off('click', onMapClick);
       }
