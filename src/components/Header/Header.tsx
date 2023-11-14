@@ -27,7 +27,6 @@ const Header = () => {
                     <li><Link to="/">Dashboard</Link></li>
                     <li><Link to="/country">Country Selection</Link></li>
                     <li><Link to="/coordinate">Coordinate Check</Link></li>
-                    <li><Link to="/historical">Historical Graph</Link></li>
                     <li><Link to="/educational">Educational Content</Link></li>
                 </ul>
             </nav>

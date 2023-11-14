@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import OnboardingPage from './components/OnboardingPage/OnboardingPage';
 import AppRoutes from './AppRoutes';
+import { ThemeProvider } from '@mui/material';
+import theme from './theme'; // Import the theme you created
 
 function App() {
   // State to manage if the onboarding is complete
@@ -22,14 +24,16 @@ function App() {
 
   return (
       <div className="App">
-        <Header />
-        <Routes>
-          {/* Conditional rendering based on the onboarding completion state */}
-          <Route 
-            path="*" 
-            element={!isOnboardingComplete ? <OnboardingPage onComplete={handleOnboardingComplete} /> : <AppRoutes />}
-          />
-        </Routes>
+        <ThemeProvider theme={theme}>
+          <Header />
+          <Routes>
+            {/* Conditional rendering based on the onboarding completion state */}
+            <Route 
+              path="*" 
+              element={!isOnboardingComplete ? <OnboardingPage onComplete={handleOnboardingComplete} /> : <AppRoutes />}
+            />
+          </Routes>
+        </ThemeProvider>
       </div>
   );
 }

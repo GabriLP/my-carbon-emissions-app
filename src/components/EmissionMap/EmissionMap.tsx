@@ -9,7 +9,7 @@ interface EmissionsMapProps {
 }
 
 const createMaterialIcon = () => {
-  const iconElement = <LocationOnIcon style={{ fontSize: '40px', color: 'red' }} />;
+  const iconElement = <LocationOnIcon />;
   return ReactDOMServer.renderToString(iconElement);
 };
 

@@ -1,6 +1,5 @@
 import Dashboard from './components/Dashboard/Dashboard';
 import EmissionsCoordinate from './components/EmissionsCoordinate/EmissionsCoordinate';
-import HistoricalGraph from './components/HistoricalGraph/HistoricalGraph';
 import EducationalContent from './components/EducationalContent/EducationalContent';
 import DataFetcher from './components/DataFetcher/DataFetcher';
 
@@ -30,11 +29,6 @@ const routesConfig: {
     path: '/coordinate',
     render: (props) => <EmissionsCoordinate />,
     name: 'CoordinateCheck',
-  },
-  {
-    path: '/historical',
-    render: (props) => <HistoricalGraph selectedCountry={props.selectedCountry} emissionsData={props.emissionsData} />,
-    name: 'HistoricalGraph',
   },
   { path: '/educational', element: <EducationalContent />, name: 'EducationalContent' },
 ];

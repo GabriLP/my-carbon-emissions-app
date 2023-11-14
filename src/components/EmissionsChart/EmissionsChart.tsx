@@ -30,7 +30,7 @@ const formatDate = (dateString: string) => {
 };
 
 // Helper function to format average with type specified for average
-const formatAverage = (average: number) => average.toFixed(5);
+const formatAverage = (average: number) => average.toFixed(3);
 
 const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
   const chartData = data.map(item => ({
@@ -52,7 +52,7 @@ const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="start" tick={{ fill: 'gray' }} />
-        <YAxis tickFormatter={number => `${number} ppm`} tick={{ fill: 'gray' }} />
+        <YAxis tickFormatter={number => `${number}`} tick={{ fill: 'gray' }} />
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="average" stroke="#8884d8" activeDot={{ r: 8 }} />
