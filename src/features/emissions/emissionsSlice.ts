@@ -17,7 +17,7 @@ export const emissionsSlice = createSlice({
   name: 'emissions',
   initialState,
   reducers: {
-    // ... (your existing reducers, if any)
+
   },
   extraReducers: (builder) => {
     builder

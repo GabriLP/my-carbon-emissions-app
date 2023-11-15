@@ -10,8 +10,8 @@ export const fetchCountries = createAsyncThunk(
       const response = await axios.get(csvUrl);
       const jsonData = await csvtojson().fromString(response.data);
       return jsonData.map((item: any) => ({
-        name: item.Name, // Adjust based on actual keys from jsonData
-        code: item.Code, // Adjust based on actual keys from jsonData
+        name: item.Name,
+        code: item.Code, 
       }));
     } catch (error) {
       return rejectWithValue('Error fetching countries');

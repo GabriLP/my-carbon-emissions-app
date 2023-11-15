@@ -3,6 +3,7 @@ import L from 'leaflet';
 import '../../../node_modules/leaflet/dist/leaflet.css';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ReactDOMServer from 'react-dom/server';
+import { Box } from '@mui/material';
 
 interface EmissionsMapProps {
   onCoordinateSelect: (latitude: number, longitude: number) => void;
@@ -58,7 +59,9 @@ const EmissionsMap: React.FC<EmissionsMapProps> = ({ onCoordinateSelect }) => {
     };
   }, [onCoordinateSelect]);
 
-  return <div id="map" style={{ height: '500px' }} />;
+  return (
+    <Box id="map" sx={{ height: 500, width: '100%' }} />
+  );
 };
 
 export default EmissionsMap;

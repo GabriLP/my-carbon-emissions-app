@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 interface ProductSelectProps {
   value: string;
@@ -7,15 +8,21 @@ interface ProductSelectProps {
 
 const ProductSelect: React.FC<ProductSelectProps> = ({ value, onChange }) => {
   return (
-    <div>
-      <label htmlFor="product-select">Choose a product:</label>
-      <select id="product-select" value={value} onChange={(e) => onChange(e.target.value)}>
-        <option value="carbonmonoxide">Carbon Monoxide</option>
-        <option value="methane">Methane</option>
-        <option value="ozone">Ozone</option>
-        <option value="nitrogendioxide">Nitrogen Dioxide</option>
-      </select>
-    </div>
+    <FormControl fullWidth>
+      <InputLabel id="product-select-label">Choose a product</InputLabel>
+      <Select
+        labelId="product-select-label"
+        id="product-select"
+        value={value}
+        label="Choose a product"
+        onChange={(e) => onChange(e.target.value)}
+      >
+        <MenuItem value="carbonmonoxide">Carbon Monoxide</MenuItem>
+        <MenuItem value="methane">Methane</MenuItem>
+        <MenuItem value="ozone">Ozone</MenuItem>
+        <MenuItem value="nitrogendioxide">Nitrogen Dioxide</MenuItem>
+      </Select>
+    </FormControl>
   );
 };
 

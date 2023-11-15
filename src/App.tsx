@@ -3,8 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import OnboardingPage from './components/OnboardingPage/OnboardingPage';
 import AppRoutes from './AppRoutes';
-import { ThemeProvider } from '@mui/material';
-import theme from './theme'; // Import the theme you created
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
 
 function App() {
   // State to manage if the onboarding is complete

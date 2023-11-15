@@ -1,4 +1,3 @@
-// DataFetcher.tsx
 import React, { useState } from 'react';
 import CountrySelection from '../CountrySelection/CountrySelection';
 import DateInput from '../DateInput/DateInput';
@@ -7,6 +6,7 @@ import ProductSelect from '../ProductSelect/ProductSelect';
 import { useSelector } from 'react-redux';
 import { fetchEmissionsByCountry } from '../../features/emissions/emissionsAPI';
 import { RootState, useAppDispatch } from '../../app/store';
+import { Button, CircularProgress, Box, Alert } from '@mui/material';
 
 const DataFetcher: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -28,25 +28,23 @@ const DataFetcher: React.FC = () => {
             alert('Please select a country and date range.');
             return;
         }
-        // Correctly dispatch the action, no need to await as dispatch can handle the promise itself
         dispatch(fetchEmissionsByCountry({ country, startDate: dates.startDate, endDate: dates.endDate, product }));
     };
 
-    // No need to transform data, assume the EmissionsChart expects the same shape as the API response
-    // and the redux state stores.
-
     return (
-        <div>
+        <Box sx={{ padding: 3 }}>
             <CountrySelection onCountrySelect={handleCountrySelect} />
             <DateInput onDatesChange={handleDatesChange} />
             <ProductSelect value={product} onChange={setProduct} />
-            <button onClick={handleSubmit} disabled={loading}>Fetch Data</button>
-            {loading && <div>Loading...</div>}
-            {error && <div>Error: {error}</div>}
+            <Button variant="contained" color="primary" onClick={handleSubmit} disabled={loading}>
+                Fetch Data
+            </Button>
+            {loading && <CircularProgress />}
+            {error && <Alert severity="error">{error}</Alert>}
             {!loading && !error && data && data.length > 0 && (
                 <EmissionsChart data={data} />
             )}
-        </div>
+        </Box>
     );
 };
 

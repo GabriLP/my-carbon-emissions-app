@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
-// Define the props type
 interface CoordinateCheckPageProps {
   onCoordinateCheck: (latitude: number, longitude: number) => void;
   latitude: string;
@@ -8,7 +10,6 @@ interface CoordinateCheckPageProps {
 }
 
 const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateCheck, latitude, longitude }) => {
-  // Use inputLatitude and inputLongitude as your state variables for the input fields
   const [inputLatitude, setInputLatitude] = useState<string>(latitude);
   const [inputLongitude, setInputLongitude] = useState<string>(longitude);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
@@ -35,30 +36,34 @@ const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateC
   }, [inputLatitude, inputLongitude, onCoordinateCheck, isFirstLoad]);
 
   return (
-    <div className="coordinate-check-page">
-      <h2>Check Emissions by Coordinates</h2>
-      <p>Enter latitude and longitude coordinates to analyze emissions data for a specific location.</p>
-      <div className="coordinate-inputs">
-        <label htmlFor="latitude-input">Latitude:</label>
-      <input
-          type="text"
+    <Box sx={{ padding: 2 }}>
+      <Typography variant="h5" gutterBottom>
+        Check Emissions by Coordinates
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        Enter latitude and longitude coordinates to analyze emissions data for a specific location.
+      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 300 }}>
+        <TextField
           id="latitude-input"
-          name="latitude"
-          placeholder="Enter your value"
+          label="Latitude"
+          type="text"
+          placeholder="Enter latitude"
           value={inputLatitude}
           onChange={(e) => setInputLatitude(e.target.value)}
-      />
-      <label htmlFor="longitude-input">Longitude:</label>
-      <input
-          type="text"
+          variant="outlined"
+        />
+        <TextField
           id="longitude-input"
-          name="longitude"
-          placeholder="Enter your value"
+          label="Longitude"
+          type="text"
+          placeholder="Enter longitude"
           value={inputLongitude}
           onChange={(e) => setInputLongitude(e.target.value)}
-      />
-      </div>
-    </div>
+          variant="outlined"
+        />
+      </Box>
+    </Box>
   );
 };
 

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchCountries } from '../../features/countries/countriesAPI';
 import { useAppDispatch, RootState } from '../../app/store';
+import { Typography, FormControl, InputLabel, MenuItem, CircularProgress, Box } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface CountrySelectionProps {
   onCountrySelect: (countryCode: string) => void;
@@ -18,15 +20,13 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
   const [selectedCountry, setSelectedCountry] = useState<string>('');
 
   useEffect(() => {
-    // Fetch countries only once when the component mounts
     dispatch(fetchCountries());
   }, [dispatch]);
 
-  const handleCountrySelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedName = event.target.value;
+  const handleCountrySelect = (event: SelectChangeEvent<string>) => {
+    const selectedName = event.target.value as string;
     setSelectedCountry(selectedName);
     
-    // Immediately find and use the country code to call onCountrySelect
     const countryObject = countries.find(c => c.name === selectedName);
     const countryCode = countryObject ? countryObject.code : '';
     if (countryCode) {
@@ -35,26 +35,39 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
   };
 
   if (loading) {
-    return <div>Loading countries...</div>;
+    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}><CircularProgress /></Box>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <Typography color="error">Error: {error}</Typography>;
   }
 
   return (
-    <div className="country-selection-page">
-      <h2>Select a Country</h2>
-      <p>Choose a country to analyze its carbon emissions data.</p>
-      <select onChange={handleCountrySelect} value={selectedCountry}>
-        <option value="">Select a Country</option>
-        {countries.map((country: Country) => (
-          <option key={country.code} value={country.name}>
-            {country.name}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Box sx={{ padding: 2 }}>
+      <Typography variant="h6">Select a Country</Typography>
+      <Typography variant="body1" gutterBottom>
+        Choose a country to analyze its carbon emissions data.
+      </Typography>
+      <FormControl fullWidth>
+        <InputLabel id="country-select-label">Country</InputLabel>
+        <Select
+          labelId="country-select-label"
+          id="country-select"
+          value={selectedCountry}
+          label="Country"
+          onChange={handleCountrySelect}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {countries.map((country: Country) => (
+            <MenuItem key={country.code} value={country.name}>
+              {country.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
 

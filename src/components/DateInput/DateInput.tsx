@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Box, TextField, FormControl } from '@mui/material';
 
 interface DateInputProps {
   onDatesChange: (dates: { startDate: string; endDate: string }) => void;
@@ -12,10 +13,7 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
     const newStartDate = event.target.value;
     setStartDate(newStartDate);
     if (endDate) {
-      onDatesChange({
-        startDate: (newStartDate),
-        endDate: (endDate),
-      });
+      onDatesChange({ startDate: newStartDate, endDate });
     }
   };
 
@@ -23,32 +21,37 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
     const newEndDate = event.target.value;
     setEndDate(newEndDate);
     if (startDate) {
-      onDatesChange({
-        startDate: (startDate),
-        endDate: (newEndDate),
-      });
+      onDatesChange({ startDate, endDate: newEndDate });
     }
   };
 
   return (
-    <div>
-      <label>
-        Start Date:
-        <input
+    <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column', marginTop: 2 }}>
+      <FormControl variant="outlined">
+        <TextField
+          id="start-date"
           type="date"
           value={startDate}
           onChange={handleStartDateChange}
+          label="Start Date"
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
-      </label>
-      <label>
-        End Date:
-        <input
+      </FormControl>
+      <FormControl variant="outlined">
+        <TextField
+          id="end-date"
           type="date"
           value={endDate}
           onChange={handleEndDateChange}
+          label="End Date"
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
-      </label>
-    </div>
+      </FormControl>
+    </Box>
   );
 };
 

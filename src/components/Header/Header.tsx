@@ -1,36 +1,38 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        //marginRight: theme.spacing(2),
-    },
     title: {
         flexGrow: 1,
+        display: 'flex',
+        alignItems: 'center',
+    },
+    logo: {
+        //marginRight: theme.spacing(2),
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit',
     },
 }));
 
 const Header = () => {
     const classes = useStyles();
     return (
-        <header className={classes.root}>
-            <div className="logo">
-                <img src="path/to/logo.png" alt="Logo" />
-                <h1 className={classes.title}>My Carbon Emissions App</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><Link to="/">Dashboard</Link></li>
-                    <li><Link to="/country">Country Selection</Link></li>
-                    <li><Link to="/coordinate">Coordinate Check</Link></li>
-                    <li><Link to="/educational">Educational Content</Link></li>
-                </ul>
-            </nav>
-        </header>
+        <AppBar position="static">
+            <Toolbar>
+                <Box className={classes.title}>
+                    <img src="path/to/logo.png" alt="Logo" className={classes.logo} />
+                    <Typography variant="h6">My Carbon Emissions App</Typography>
+                </Box>
+                <Button color="inherit" component={RouterLink} to="/">Dashboard</Button>
+                <Button color="inherit" component={RouterLink} to="/country">Country Selection</Button>
+                <Button color="inherit" component={RouterLink} to="/coordinate">Coordinate Check</Button>
+                <Button color="inherit" component={RouterLink} to="/educational">Educational Content</Button>
+            </Toolbar>
+        </AppBar>
     );
 };
 

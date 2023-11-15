@@ -7,6 +7,7 @@ import EmissionsChart from '../EmissionsChart/EmissionsChart';
 import { RootState, useAppDispatch } from '../../app/store';
 import EmissionsMap from '../EmissionMap/EmissionMap';
 import ProductSelect from '../ProductSelect/ProductSelect';
+import { Box, Button, CircularProgress, Alert } from '@mui/material';
 
 const EmissionsCoordinate: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -48,7 +49,7 @@ const EmissionsCoordinate: React.FC = () => {
   };
 
   return (
-    <div>
+    <Box sx={{ padding: 3 }}>
       <CoordinateCheckPage
         onCoordinateCheck={handleCoordinateCheck}
         latitude={selectedCoordinates.lat}
@@ -57,13 +58,23 @@ const EmissionsCoordinate: React.FC = () => {
       <DateInput onDatesChange={handleDatesChange} />
       <ProductSelect value={product} onChange={setProduct} />
       <EmissionsMap onCoordinateSelect={handleMapCoordinateSelect} />
-      <button onClick={handleSubmit} disabled={loading}>Fetch Data</button>
-      {loading && <div>Loading...</div>}
-      {error && <div>Error: {error}</div>}
+
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onClick={handleSubmit} 
+        disabled={loading}
+        sx={{ mt: 2 }}
+      >
+        Fetch Data
+      </Button>
+
+      {loading && <CircularProgress />}
+      {error && <Alert severity="error">{error}</Alert>}
       {!loading && !error && data && data.length > 0 && (
         <EmissionsChart data={data} />
       )}
-    </div>
+    </Box>
   );
 };
 
