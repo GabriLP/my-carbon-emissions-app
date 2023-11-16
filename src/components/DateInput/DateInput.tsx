@@ -26,8 +26,8 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column', marginTop: 2 }}>
-      <FormControl variant="outlined">
+    <Box sx={{ display: 'flex', gap: 2, flexDirection: 'row', alignItems: 'center', mt: 2 }}>
+      <FormControl variant="outlined" sx={{ flexGrow: 1 }}>
         <TextField
           id="start-date"
           type="date"
@@ -37,9 +37,10 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
           InputLabelProps={{
             shrink: true,
           }}
+          fullWidth
         />
       </FormControl>
-      <FormControl variant="outlined">
+      <FormControl variant="outlined" sx={{ flexGrow: 1 }}>
         <TextField
           id="end-date"
           type="date"
@@ -49,6 +50,7 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
           InputLabelProps={{
             shrink: true,
           }}
+          fullWidth
         />
       </FormControl>
     </Box>

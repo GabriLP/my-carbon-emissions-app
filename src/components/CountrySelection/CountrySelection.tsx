@@ -44,11 +44,11 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h6">Select a Country</Typography>
+      <Typography variant="h5">Select a Country</Typography>
       <Typography variant="body1" gutterBottom>
-        Choose a country to analyze its carbon emissions data.
+        Choose a country and a date-range to analyze its emissions data.
       </Typography>
-      <FormControl fullWidth>
+      <FormControl sx={{ minWidth: 150 }}>
         <InputLabel id="country-select-label">Country</InputLabel>
         <Select
           labelId="country-select-label"

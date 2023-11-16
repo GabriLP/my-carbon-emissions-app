@@ -69,7 +69,11 @@ const EmissionsCoordinate: React.FC = () => {
         Fetch Data
       </Button>
 
-      {loading && <CircularProgress />}
+      {loading && (
+                <Box display="flex" justifyContent="center">
+                    <CircularProgress />
+                </Box>
+      )}
       {error && <Alert severity="error">{error}</Alert>}
       {!loading && !error && data && data.length > 0 && (
         <EmissionsChart data={data} />

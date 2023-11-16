@@ -31,7 +31,7 @@ const formatDate = (dateString: string) => {
 };
 
 // Helper function to format average with type specified for average
-const formatAverage = (average: number) => average.toFixed(3);
+const formatAverage = (average: number) => average.toFixed(4);
 
 const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
   const chartData = data.map(item => ({

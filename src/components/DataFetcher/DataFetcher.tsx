@@ -31,15 +31,28 @@ const DataFetcher: React.FC = () => {
         dispatch(fetchEmissionsByCountry({ country, startDate: dates.startDate, endDate: dates.endDate, product }));
     };
 
+
     return (
         <Box sx={{ padding: 3 }}>
             <CountrySelection onCountrySelect={handleCountrySelect} />
             <DateInput onDatesChange={handleDatesChange} />
             <ProductSelect value={product} onChange={setProduct} />
-            <Button variant="contained" color="primary" onClick={handleSubmit} disabled={loading}>
-                Fetch Data
-            </Button>
-            {loading && <CircularProgress />}
+            <Box>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    onClick={handleSubmit} 
+                    disabled={loading}
+                >
+                    Fetch Data
+                </Button>
+            </Box>
+
+            {loading && (
+                <Box display="flex" justifyContent="center">
+                    <CircularProgress />
+                </Box>
+            )}
             {error && <Alert severity="error">{error}</Alert>}
             {!loading && !error && data && data.length > 0 && (
                 <EmissionsChart data={data} />

@@ -41,28 +41,30 @@ const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateC
         Check Emissions by Coordinates
       </Typography>
       <Typography variant="body1" gutterBottom>
-        Enter latitude and longitude coordinates to analyze emissions data for a specific location.
+        Enter latitude and longitude coordinates or click any point of the map to analyze emissions data for a specific location.
       </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 300 }}>
-        <TextField
-          id="latitude-input"
-          label="Latitude"
-          type="text"
-          placeholder="Enter latitude"
-          value={inputLatitude}
-          onChange={(e) => setInputLatitude(e.target.value)}
-          variant="outlined"
-        />
-        <TextField
-          id="longitude-input"
-          label="Longitude"
-          type="text"
-          placeholder="Enter longitude"
-          value={inputLongitude}
-          onChange={(e) => setInputLongitude(e.target.value)}
-          variant="outlined"
-        />
-      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, width: '100%' }}>
+    <TextField
+      id="latitude-input"
+      label="Latitude"
+      type="text"
+      placeholder="Enter latitude"
+      value={inputLatitude}
+      onChange={(e) => setInputLatitude(e.target.value)}
+      variant="outlined"
+      fullWidth
+    />
+    <TextField
+      id="longitude-input"
+      label="Longitude"
+      type="text"
+      placeholder="Enter longitude"
+      value={inputLongitude}
+      onChange={(e) => setInputLongitude(e.target.value)}
+      variant="outlined"
+      fullWidth
+    />
+  </Box>
     </Box>
   );
 };

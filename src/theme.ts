@@ -1,39 +1,51 @@
 import { createTheme } from '@mui/material/styles';
 
-// Define your custom colors
-const palette = {
-  primary: {
-    main: '#556cd6', // Example primary color
-  },
-  secondary: {
-    main: '#19857b', // Example secondary color
-  },
-  error: {
-    main: '#ff5252', // Example error color
-  },
-  // Add other colors as needed
-};
+declare module '@mui/material/styles' {
+  interface Palette {
+    accent: Palette['primary'];
+  }
+  interface PaletteOptions {
+    accent?: PaletteOptions['primary'];
+  }
+}
 
-// Define custom typography
-const typography = {
-  fontFamily: [
-    '"Roboto"', // Primary font
-    '"Arial"', // Secondary font
-    'sans-serif', // Fallback font
-  ].join(','),
-  // You can also define font sizes, weights, etc.
-};
 
-// Define custom spacing
-const spacing = 8; // The base unit of spacing, e.g., 8px
-
-// Create a theme instance
 const theme = createTheme({
-  palette,
-  typography,
-  spacing,
-  // You can add more customization here as needed, such as:
-  // breakpoints, transitions, zIndex, etc.
+  palette: {
+    primary: {
+      main: '#4CAF50', // Nature Green
+    },
+    secondary: {
+      main: '#2196F3', // Sky Blue
+    },
+    error: {
+      main: '#F44336', // Warning Red
+    },
+    background: {
+      default: '#FAFAFA', // Off White
+    },
+    text: {
+      primary: '#263238', // Dark Gray
+    },
+    accent: {
+      main: '#795548', // Earth Brown
+    },
+  },
+  typography: {
+    fontFamily: 'Roboto, Lato, Arial, sans-serif',
+    // Define other typography variants here
+  },
+  spacing: 8, // Base unit for spacing
+  breakpoints: {
+    values: {
+      xs: 0,    // Extra small devices (portrait phones)
+      sm: 600,  // Small devices (landscape phones)
+      md: 900,  // Medium devices (tablets)
+      lg: 1200, // Large devices (desktops)
+      xl: 1536, // Extra large devices (large desktops)
+      // You can adjust these values to better suit your design needs
+    },
+  },
 });
 
 export default theme;

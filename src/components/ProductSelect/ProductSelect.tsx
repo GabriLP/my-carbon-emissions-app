@@ -8,7 +8,7 @@ interface ProductSelectProps {
 
 const ProductSelect: React.FC<ProductSelectProps> = ({ value, onChange }) => {
   return (
-    <FormControl fullWidth>
+    <FormControl sx={{ my: 2 }}>
       <InputLabel id="product-select-label">Choose a product</InputLabel>
       <Select
         labelId="product-select-label"
@@ -20,7 +20,6 @@ const ProductSelect: React.FC<ProductSelectProps> = ({ value, onChange }) => {
         <MenuItem value="carbonmonoxide">Carbon Monoxide</MenuItem>
         <MenuItem value="methane">Methane</MenuItem>
         <MenuItem value="ozone">Ozone</MenuItem>
-        <MenuItem value="nitrogendioxide">Nitrogen Dioxide</MenuItem>
       </Select>
     </FormControl>
   );

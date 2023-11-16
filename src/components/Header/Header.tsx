@@ -25,7 +25,7 @@ const Header = () => {
             <Toolbar>
                 <Box className={classes.title}>
                     <img src="path/to/logo.png" alt="Logo" className={classes.logo} />
-                    <Typography variant="h6">My Carbon Emissions App</Typography>
+                    <Typography variant="h6">GlobalEmissions</Typography>
                 </Box>
                 <Button color="inherit" component={RouterLink} to="/">Dashboard</Button>
                 <Button color="inherit" component={RouterLink} to="/country">Country Selection</Button>
