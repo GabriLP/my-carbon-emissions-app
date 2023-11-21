@@ -28,8 +28,8 @@ const EmissionsMap: React.FC<EmissionsMapProps> = ({ onCoordinateSelect }) => {
   useEffect(() => {
     if (!mapRef.current) {
       mapRef.current = L.map('map', {
-        center: [0, 0],
-        zoom: 2
+        center: [40, 20],
+        zoom: 3,
       });
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -60,7 +60,7 @@ const EmissionsMap: React.FC<EmissionsMapProps> = ({ onCoordinateSelect }) => {
   }, [onCoordinateSelect]);
 
   return (
-    <Box id="map" sx={{ height: 500, width: '100%' }} />
+    <Box id="map" sx={{ height: 500, width: '90%', margin: 'auto' }} />
   );
 };
 

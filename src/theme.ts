@@ -9,7 +9,6 @@ declare module '@mui/material/styles' {
   }
 }
 
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -33,17 +32,27 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Roboto, Lato, Arial, sans-serif',
-    // Define other typography variants here
   },
-  spacing: 8, // Base unit for spacing
+  components: {
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'Roboto, Lato, Arial, sans-serif',
+          '&:hover': {
+            backgroundColor: '#e0e0e0', 
+          },
+        },
+      },
+    },
+  },
+  spacing: 8,
   breakpoints: {
     values: {
-      xs: 0,    // Extra small devices (portrait phones)
-      sm: 600,  // Small devices (landscape phones)
-      md: 900,  // Medium devices (tablets)
-      lg: 1200, // Large devices (desktops)
-      xl: 1536, // Extra large devices (large desktops)
-      // You can adjust these values to better suit your design needs
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
     },
   },
 });

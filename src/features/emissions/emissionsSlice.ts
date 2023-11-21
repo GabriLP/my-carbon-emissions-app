@@ -17,7 +17,11 @@ export const emissionsSlice = createSlice({
   name: 'emissions',
   initialState,
   reducers: {
-
+    resetEmissionsData: (state) => {
+      state.data = [];
+      state.error = null;
+      state.loading = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -59,3 +63,4 @@ export const emissionsSlice = createSlice({
 });
 
 export default emissionsSlice.reducer;
+export const { resetEmissionsData } = emissionsSlice.actions;

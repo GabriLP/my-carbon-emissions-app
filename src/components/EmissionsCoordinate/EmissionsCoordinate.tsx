@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchEmissionsByCoordinates } from 'src/features/emissions/emissionsAPI';
 import CoordinateCheckPage from '../CoordinateCheck/CoordinateCheck';
@@ -7,7 +7,8 @@ import EmissionsChart from '../EmissionsChart/EmissionsChart';
 import { RootState, useAppDispatch } from '../../app/store';
 import EmissionsMap from '../EmissionMap/EmissionMap';
 import ProductSelect from '../ProductSelect/ProductSelect';
-import { Box, Button, CircularProgress, Alert } from '@mui/material';
+import { Box, Button, CircularProgress, Alert, Snackbar } from '@mui/material';
+import { resetEmissionsData } from '../../features/emissions/emissionsSlice';
 
 const EmissionsCoordinate: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ const EmissionsCoordinate: React.FC = () => {
   const [dates, setDates] = useState<{ startDate: string, endDate: string } | null>(null);
   const [selectedCoordinates, setSelectedCoordinates] = useState<{ lat: string, lng: string }>({ lat: '', lng: '' });
   const [product, setProduct] = useState<string>('carbonmonoxide');
-
+  const [snackbarError, setSnackbarError] = useState<string>('');
 
   const handleCoordinateCheck = useCallback((latitude: number, longitude: number) => {
     setCoordinates({ lat: latitude, lng: longitude });
@@ -36,7 +37,7 @@ const EmissionsCoordinate: React.FC = () => {
 
   const handleSubmit = () => {
     if (!coordinates || !dates || !dates.startDate || !dates.endDate) {
-      alert('Please select coordinates and date range.');
+      setSnackbarError('Please select coordinates and date range.');
       return;
     }
     dispatch(fetchEmissionsByCoordinates({
@@ -46,7 +47,12 @@ const EmissionsCoordinate: React.FC = () => {
       endDate: dates.endDate,
       product
     }));
+    setSnackbarError(''); // Reset error on successful submission
   };
+
+  useEffect(() => {
+    dispatch(resetEmissionsData());
+  }, [dispatch]);
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -58,7 +64,6 @@ const EmissionsCoordinate: React.FC = () => {
       <DateInput onDatesChange={handleDatesChange} />
       <ProductSelect value={product} onChange={setProduct} />
       <EmissionsMap onCoordinateSelect={handleMapCoordinateSelect} />
-
       <Button 
         variant="contained" 
         color="primary" 
@@ -68,16 +73,13 @@ const EmissionsCoordinate: React.FC = () => {
       >
         Fetch Data
       </Button>
-
-      {loading && (
-                <Box display="flex" justifyContent="center">
-                    <CircularProgress />
-                </Box>
-      )}
-      {error && <Alert severity="error">{error}</Alert>}
-      {!loading && !error && data && data.length > 0 && (
-        <EmissionsChart data={data} />
-      )}
+      {loading && <Box display="flex" justifyContent="center"><CircularProgress /></Box>}
+      <Snackbar open={snackbarError !== ''} autoHideDuration={6000} onClose={() => setSnackbarError('')}>
+        <Alert onClose={() => setSnackbarError('')} severity="error" sx={{ width: '100%' }}>
+          {snackbarError}
+        </Alert>
+      </Snackbar>
+      {!loading && !error && data && data.length > 0 && <EmissionsChart data={data} />}
     </Box>
   );
 };

@@ -1,22 +1,25 @@
 import React from 'react';
+import { Button, Typography, Box, Container } from '@mui/material';
 
-// Define the type for the props expected by OnboardingPage
 type OnboardingPageProps = {
   onComplete: () => void;
 };
 
-// Use the OnboardingPageProps type for the component's props
 const OnboardingPage: React.FC<OnboardingPageProps> = ({ onComplete }) => {
-  const handleCompleteOnboarding = () => {
-    onComplete();
-  };
-
   return (
-    <div className="onboarding-page">
-      <h2>Welcome to the Carbon Emissions App</h2>
-      <p>Learn how to track and analyze carbon emissions for a greener world.</p>
-      <button onClick={handleCompleteOnboarding}>Get Started</button>
-    </div>
+    <Container maxWidth="sm">
+      <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography variant="h4" gutterBottom>
+          Welcome to the Global Emissions Tracker
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Explore and analyze data on carbon monoxide, ozone, and methane emissions globally, either by country or specific coordinates.
+        </Typography>
+        <Button variant="contained" color="primary" onClick={onComplete}>
+          Get Started
+        </Button>
+      </Box>
+    </Container>
   );
 };
 

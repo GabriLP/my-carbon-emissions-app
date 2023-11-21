@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchCountries } from '../../features/countries/countriesAPI';
 import { useAppDispatch, RootState } from '../../app/store';
-import { Typography, FormControl, InputLabel, MenuItem, CircularProgress, Box } from '@mui/material';
+import { Typography, FormControl, InputLabel, MenuItem, Skeleton, Box } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface CountrySelectionProps {
@@ -35,7 +35,13 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
   };
 
   if (loading) {
-    return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}><CircularProgress /></Box>;
+    return (
+      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <Skeleton variant="text" width={210} height={35} />
+        <Skeleton variant="text" width={450} height={20} />
+        <Skeleton variant="rectangular" width={150} height={56} />
+      </Box>
+    );
   }
 
   if (error) {
@@ -43,7 +49,7 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
   }
 
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box>
       <Typography variant="h5">Select a Country</Typography>
       <Typography variant="body1" gutterBottom>
         Choose a country and a date-range to analyze its emissions data.

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { motion } from 'framer-motion';
 
 interface CoordinateCheckPageProps {
   onCoordinateCheck: (latitude: number, longitude: number) => void;
@@ -36,36 +37,44 @@ const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateC
   }, [inputLatitude, inputLongitude, onCoordinateCheck, isFirstLoad]);
 
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h5" gutterBottom>
-        Check Emissions by Coordinates
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        Enter latitude and longitude coordinates or click any point of the map to analyze emissions data for a specific location.
-      </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, width: '100%' }}>
-    <TextField
-      id="latitude-input"
-      label="Latitude"
-      type="text"
-      placeholder="Enter latitude"
-      value={inputLatitude}
-      onChange={(e) => setInputLatitude(e.target.value)}
-      variant="outlined"
-      fullWidth
-    />
-    <TextField
-      id="longitude-input"
-      label="Longitude"
-      type="text"
-      placeholder="Enter longitude"
-      value={inputLongitude}
-      onChange={(e) => setInputLongitude(e.target.value)}
-      variant="outlined"
-      fullWidth
-    />
-  </Box>
+      <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Box>
+        <Typography variant="h5" gutterBottom>
+          Check Emissions by Coordinates
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Enter latitude and longitude coordinates or click any point of the map to analyze emissions data for a specific location.
+        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+      <TextField
+        id="latitude-input"
+        label="Latitude"
+        type="text"
+        placeholder="Enter latitude"
+        value={inputLatitude}
+        onChange={(e) => setInputLatitude(e.target.value)}
+        variant="outlined"
+        sx={{ maxWidth: 300}}
+        fullWidth
+      />
+      <TextField
+        id="longitude-input"
+        label="Longitude"
+        type="text"
+        placeholder="Enter longitude"
+        value={inputLongitude}
+        onChange={(e) => setInputLongitude(e.target.value)}
+        variant="outlined"
+        sx={{ maxWidth: 300}}
+        fullWidth
+      />
     </Box>
+      </Box>
+  </motion.div>
   );
 };
 

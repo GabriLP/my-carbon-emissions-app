@@ -9,7 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { Paper } from '@mui/material';
+import { useTheme, Paper } from '@mui/material';
 
 interface EmissionData {
   average: number;
@@ -34,6 +34,7 @@ const formatDate = (dateString: string) => {
 const formatAverage = (average: number) => average.toFixed(4);
 
 const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
+  const theme = useTheme();
   const chartData = data.map(item => ({
     ...item,
     start: formatDate(item.start),
@@ -41,7 +42,7 @@ const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
   }));
 
   return (
-    <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+    <Paper elevation={3} sx={{ p: 2, mb: 2, mt: 2 }}>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={chartData}
@@ -52,12 +53,12 @@ const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="start" tick={{ fill: 'gray' }} />
-          <YAxis tickFormatter={number => `${number}`} tick={{ fill: 'gray' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} />
+          <XAxis dataKey="start" tick={{ fill: theme.palette.text.primary }} />
+          <YAxis tickFormatter={number => `${number}`} tick={{ fill: theme.palette.text.primary }} />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="average" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="average" stroke={theme.palette.primary.main} activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     </Paper>
