@@ -1,34 +1,28 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Box, useMediaQuery, useTheme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';
 
-const useStyles = makeStyles((theme) => ({
-    title: {
-        flexGrow: 1,
-        display: 'flex',
-        alignItems: 'center',
-    },
-    logo: {
-        // marginRight: theme.spacing(2),
-    },
-    link: {
-        textDecoration: 'none',
-        color: 'inherit',
-    },
-}));
-
 const Header = () => {
-    const classes = useStyles();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
         <AppBar position="static">
             <Toolbar>
-                <Box className={classes.title}>
-                    <img src="%PUBLIC_URL%/logo.png" alt="Logo" className={classes.logo} />
+                <Box
+                    sx={{
+                        flexGrow: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        '& .logo': {
+                            marginRight: theme.spacing(1),
+                            width: 56,
+                            height: 56
+                        }
+                    }}
+                >
+                    <img src={process.env.PUBLIC_URL + '/logo.png'} alt="Logo" className="logo" />
                     <Typography variant="h6">GlobalEmissions</Typography>
                 </Box>
                 {!isMobile && (
