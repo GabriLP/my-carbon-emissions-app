@@ -2,7 +2,11 @@
   "compilerOptions": {
     // Specifies the root files and the compiler options required to compile the project.
     "target": "es5", // Compile down to ECMAScript 5 for broad compatibility
-    "lib": ["dom", "dom.iterable", "esnext"], // Include typings for the DOM and latest ECMAScript features
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ], // Include typings for the DOM and latest ECMAScript features
     "allowJs": true, // Allow JavaScript files to be compiled
     "skipLibCheck": true, // Skip type checking of all declaration files (*.d.ts)
     "esModuleInterop": true, // Enables __importDefault helper for default import interoperability between CommonJS and ESModules
@@ -14,14 +18,30 @@
     "resolveJsonModule": true, // Allow importing JSON modules
     "isolatedModules": true, // Ensure that each file can be safely transpiled without relying on other imports
     "noEmit": true, // Do not emit outputs (no files are written on disk on compilation)
-    "jsx": "react-jsx", // Support JSX in .tsx files: "react" mode will emit React.createElement
+    "jsx": "preserve", // Support JSX in .tsx files: "react" mode will emit React.createElement
     "baseUrl": "./", // Set the base directory to resolve non-relative module names
     "paths": { // Specify paths mappings so that you can have custom library/component paths
-      "@components/*": ["src/components/*"],
-      "@utils/*": ["src/utils/*"],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ]
       // Add more path mappings here
-    }
+    },
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src/**/*"], // Include all files in the src folder
-  "exclude": ["node_modules", "build"] // Exclude the node_modules and build folders
+  "include": [
+    "src/**/*",
+    ".next/types/**/*.ts"
+  ], // Include all files in the src folder
+  "exclude": [
+    "node_modules",
+    "build"
+  ] // Exclude the node_modules and build folders
 }

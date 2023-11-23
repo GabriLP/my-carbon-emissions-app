@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { debounce } from 'lodash';
+import { Helmet } from 'react-helmet';
 import CountrySelection from '../CountrySelection/CountrySelection';
 import DateInput from '../DateInput/DateInput';
 import EmissionsChart from '../EmissionsChart/EmissionsChart';
@@ -25,14 +27,20 @@ const DataFetcher: React.FC = () => {
         setDates(selectedDates);
     };
 
-    const handleSubmit = () => {
+    const debouncedFetchEmissionsByCountry = useCallback(
+        debounce((country, startDate, endDate, product) => {
+          dispatch(fetchEmissionsByCountry({ country, startDate, endDate, product }));
+        }, 300),
+        [dispatch]
+      );
+
+      const handleSubmit = useCallback(() => {
         if (!country || !dates.startDate || !dates.endDate) {
-            setSnackbarError('Please select a country and date range.');
-            return;
+          setSnackbarError('Please select a country and date range.');
+          return;
         }
-        dispatch(fetchEmissionsByCountry({ country, startDate: dates.startDate, endDate: dates.endDate, product }));
-        setSnackbarError('');
-    };
+        debouncedFetchEmissionsByCountry(country, dates.startDate, dates.endDate, product);
+    }, [country, dates, product, debouncedFetchEmissionsByCountry]);
 
     useEffect(() => {
         dispatch(resetEmissionsData());
@@ -40,6 +48,13 @@ const DataFetcher: React.FC = () => {
 
     return (
         <Box sx={{ padding: 3 }}>
+        <Helmet>
+                <title>Emissions by Country | GlobalEmissions</title>
+                <meta
+                    name="description"
+                    content="Compare emissions data from different countries around the world."
+                />
+        </Helmet>
             <CountrySelection onCountrySelect={handleCountrySelect} />
             <DateInput onDatesChange={handleDatesChange} />
             <ProductSelect value={product} onChange={setProduct} />

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EmissionData, fetchEmissionsByCountry, fetchEmissionsByCoordinates } from './emissionsAPI';
 
 interface EmissionsState {

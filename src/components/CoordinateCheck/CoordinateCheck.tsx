@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { motion } from 'framer-motion';
+import { debounce } from 'lodash';
 
 interface CoordinateCheckPageProps {
   onCoordinateCheck: (latitude: number, longitude: number) => void;
@@ -14,6 +15,21 @@ const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateC
   const [inputLatitude, setInputLatitude] = useState<string>(latitude);
   const [inputLongitude, setInputLongitude] = useState<string>(longitude);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
+  const debouncedSetInputLatitude = debounce((newValue: string) => {
+    setInputLatitude(newValue);
+  }, 200);
+
+  const debouncedSetInputLongitude = debounce((newValue: string) => {
+    setInputLongitude(newValue);
+  }, 200);
+
+  const handleLatitudeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    debouncedSetInputLatitude(event.target.value);
+  };
+
+  const handleLongitudeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    debouncedSetInputLongitude(event.target.value);
+  };
 
   useEffect(() => {
     setInputLatitude(latitude);
@@ -56,7 +72,7 @@ const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateC
         type="text"
         placeholder="Enter latitude"
         value={inputLatitude}
-        onChange={(e) => setInputLatitude(e.target.value)}
+        onChange={handleLatitudeChange}
         variant="outlined"
         sx={{ maxWidth: 300}}
         fullWidth
@@ -67,7 +83,7 @@ const CoordinateCheckPage: React.FC<CoordinateCheckPageProps> = ({ onCoordinateC
         type="text"
         placeholder="Enter longitude"
         value={inputLongitude}
-        onChange={(e) => setInputLongitude(e.target.value)}
+        onChange={handleLongitudeChange}
         variant="outlined"
         sx={{ maxWidth: 300}}
         fullWidth

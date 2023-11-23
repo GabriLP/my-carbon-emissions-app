@@ -12,7 +12,7 @@ const dropdownVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
 };
 
-const ProductSelect: React.FC<ProductSelectProps> = ({ value, onChange }) => {
+const ProductSelect: React.FC<ProductSelectProps> = React.memo(({ value, onChange }) => {
   return (
     <motion.div
       variants={dropdownVariants}
@@ -35,6 +35,6 @@ const ProductSelect: React.FC<ProductSelectProps> = ({ value, onChange }) => {
       </FormControl>
     </motion.div>
   );
-};
+});
 
 export default ProductSelect;

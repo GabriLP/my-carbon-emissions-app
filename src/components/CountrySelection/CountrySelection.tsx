@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchCountries } from '../../features/countries/countriesAPI';
 import { useAppDispatch, RootState } from '../../app/store';
@@ -14,7 +14,7 @@ interface Country {
   code: string;
 }
 
-const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) => {
+const CountrySelection: React.FC<CountrySelectionProps> = React.memo(({ onCountrySelect }) => {
   const dispatch = useAppDispatch();
   const { list: countries, loading, error } = useSelector((state: RootState) => state.countries);
   const [selectedCountry, setSelectedCountry] = useState<string>('');
@@ -27,7 +27,7 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
     const selectedName = event.target.value as string;
     setSelectedCountry(selectedName);
     
-    const countryObject = countries.find(c => c.name === selectedName);
+    const countryObject = countries.find((c: Country) => c.name === selectedName);
     const countryCode = countryObject ? countryObject.code : '';
     if (countryCode) {
       onCountrySelect(countryCode);
@@ -36,7 +36,7 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
 
   if (loading) {
     return (
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <Box sx={{ width: '100%', maxWidth: 360, }}>
         <Skeleton variant="text" width={210} height={35} />
         <Skeleton variant="text" width={450} height={20} />
         <Skeleton variant="rectangular" width={150} height={56} />
@@ -75,6 +75,6 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({ onCountrySelect }) 
       </FormControl>
     </Box>
   );
-};
+});
 
 export default CountrySelection;

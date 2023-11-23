@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   LineChart,
   Line,
@@ -33,9 +33,9 @@ const formatDate = (dateString: string) => {
 // Helper function to format average with type specified for average
 const formatAverage = (average: number) => average.toFixed(4);
 
-const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
+const EmissionsChart: React.FC<EmissionsChartProps> = React.memo(({ data }) => {
   const theme = useTheme();
-  const chartData = data.map(item => ({
+  const chartData = data.map((item: EmissionData) => ({
     ...item,
     start: formatDate(item.start),
     average: formatAverage(item.average),
@@ -63,6 +63,6 @@ const EmissionsChart: React.FC<EmissionsChartProps> = ({ data }) => {
       </ResponsiveContainer>
     </Paper>
   );
-};
+});
 
 export default EmissionsChart;
