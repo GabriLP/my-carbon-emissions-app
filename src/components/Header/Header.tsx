@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import Image from 'next/image';
 import { AppBar, Toolbar, Typography, Button, Box, useMediaQuery, useTheme } from '@mui/material';
+import Link from 'next/link';
 import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';
 
 const Header = () => {
@@ -15,21 +16,31 @@ const Header = () => {
                         flexGrow: 1,
                         display: 'flex',
                         alignItems: 'center',
-                        '& .logo': {
+                        '& .logo-container': {
                             marginRight: theme.spacing(1),
                             width: 56,
-                            height: 56
+                            height: 56,
+                            position: 'relative'
                         }
                     }}
                 >
-                    <img src={process.env.PUBLIC_URL + '/logo.png'} alt="Logo" className="logo" />
+
+                    <Box className="logo-container">
+                        <Image src="/logo.png" alt="Logo" width={56} height={56} />
+                    </Box>
                     <Typography variant="h6">GlobalEmissions</Typography>
                 </Box>
                 {!isMobile && (
                     <>
-                        <Button color="inherit" component={RouterLink} to="/">Country Selection</Button>
-                        <Button color="inherit" component={RouterLink} to="/coordinate">Coordinate Check</Button>
-                        <Button color="inherit" component={RouterLink} to="/educational">Educational Content</Button>
+                        <Link href="/" passHref>
+                            <Button color="inherit">Country Selection</Button>
+                        </Link>
+                        <Link href="/coordinate" passHref>
+                            <Button color="inherit">Coordinate Check</Button>
+                        </Link>
+                        <Link href="/educational" passHref>
+                            <Button color="inherit">Educational Content</Button>
+                        </Link>
                     </>
                 )}
                 {isMobile && <HamburgerMenu />}

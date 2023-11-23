@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Box, TextField, FormControl } from '@mui/material';
 import { motion } from 'framer-motion';
 
@@ -10,21 +10,21 @@ const DateInput: React.FC<DateInputProps> = ({ onDatesChange }) => {
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
 
-  const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStartDateChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const newStartDate = event.target.value;
     setStartDate(newStartDate);
     if (endDate) {
       onDatesChange({ startDate: newStartDate, endDate });
     }
-  };
+  }, [setStartDate, endDate, onDatesChange]);
 
-  const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEndDateChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const newEndDate = event.target.value;
     setEndDate(newEndDate);
     if (startDate) {
       onDatesChange({ startDate, endDate: newEndDate });
     }
-  };
+  }, [setEndDate, startDate, onDatesChange]);
 
   return (
     <motion.div
