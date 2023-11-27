@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# GlobalEmissions
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+GlobalEmissions is a React web application that provides users with the ability to analyze global emissions data based on country selection, geographical coordinates, and specific pollutants. The application utilizes Redux for state management and Material UI for styling. This project is ideal for those interested in environmental data analysis and climate change studies.
 
-## Available Scripts
+## Features
+- **Country and Coordinate-Based Data Analysis:** Users can select countries or enter geographical coordinates to fetch emissions data.
+- **Pollutant Selection:** Supports analysis of various pollutants like Carbon Monoxide, Methane, and Ozone.
+- **Interactive Map:** Clickable map for selecting geographical coordinates.
+- **Data Visualization:** Emissions data is visualized using responsive line charts.
+- **Educational Content:** Provides insights into different pollutants and their impact on climate change.
 
-In the project directory, you can run:
+## Getting Started
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/GlobalEmissions.git
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Run the application:**
+   ```bash
+   npm start
+   ```
 
-### `npm start`
+## Technologies Used
+- React.js
+- Redux Toolkit
+- Material UI
+- Framer Motion for animations
+- Axios for API requests
+- Recharts for data visualization
+- Leaflet for interactive mapping
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Directory Structure
+- `src/app`: Contains Redux store and root reducer.
+- `src/components`: Reusable React components like headers, charts, and form controls.
+- `src/features`: Redux slices and asynchronous actions for different features like countries and emissions.
+- `pages`: Next.js pages for different application routes.
+- `public`: Static assets like images.
+- `style`: Global styles and Material UI theme customization.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contribution
+Contributions to the GlobalEmissions project are welcome. Please follow the existing coding style and submit a pull request for review.
