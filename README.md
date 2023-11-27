@@ -13,7 +13,7 @@ GlobalEmissions is a React web application that provides users with the ability 
 ## Getting Started
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/GlobalEmissions.git
+   git clone https://github.com/GabriLP/carbon-emissions-app.git
    ```
 2. **Install dependencies:**
    ```bash
