@@ -8,13 +8,13 @@ export interface EmissionData {
   end: string;
 }
 
-const EMISSIONS_API_BASE_URL = process.env.EMISSIONS_API_URL;
+const emissionsApiUrl = process.env.NEXT_PUBLIC_EMISSIONS_API_URL;
 
 export const fetchEmissionsByCountry = createAsyncThunk<EmissionData[], { country: string; startDate: string; endDate: string; product: string }>(
   'emissions/fetchByCountry',
   async ({ country, startDate, endDate, product }, thunkAPI) => {
     try {
-      const response = await axios.get(`${process.env.EMISSIONS_API_BASE_URL}/${product}/average.json`, {
+      const response = await axios.get(`${emissionsApiUrl}/${product}/average.json`, {
         params: { country, begin: startDate, end: endDate },
       });
       return response.data;
@@ -38,7 +38,7 @@ export const fetchEmissionsByCoordinates = createAsyncThunk<
     try {
       const point = `${lng},${lat}`;
 
-      const response = await axios.get(`${process.env.EMISSIONS_API_BASE_URL}/${product}/average.json`, {
+      const response = await axios.get(`${emissionsApiUrl}/${product}/average.json`, {
         params: {
           point, 
           begin: startDate, 
