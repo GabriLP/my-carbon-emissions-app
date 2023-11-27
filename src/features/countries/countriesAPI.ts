@@ -6,8 +6,8 @@ export const fetchCountries = createAsyncThunk(
   'country/fetchCountries',
   async (_, { rejectWithValue }) => {
     try {
-      const csvUrl = 'https://datahub.io/core/country-list/r/data.csv';
-      const response = await axios.get(csvUrl);
+      const csvUrl = process.env.COUNTRY_API_URL;
+      const response = await axios.get(`${process.env.COUNTRY_API_URL}`);
       const jsonData = await csvtojson().fromString(response.data);
       return jsonData.map((item: any) => ({
         name: item.Name,
