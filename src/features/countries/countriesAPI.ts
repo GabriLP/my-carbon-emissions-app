@@ -14,7 +14,6 @@ export const fetchCountries = createAsyncThunk(
         code: item.Code, 
       }));
     } catch (error) {
-      console.error("Error in fetchCountries:", error);  // Log any errors
       return rejectWithValue('Error fetching countries');
     }
   }
