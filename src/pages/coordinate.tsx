@@ -55,6 +55,14 @@ const EmissionsCoordinate: React.FC = () => {
     dispatch(resetEmissionsData());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (error) {
+        setSnackbarError('Failed to fetch data from the server.');
+    } else if (!loading && data && data.length === 0) {
+        setSnackbarError('No data available for the selected criteria. Tips: Try selecting a date range within 2023 or earlier.');
+    }
+}, [error, loading, data]);
+
   return (
     <Box sx={{ padding: 3 }}>
       <Helmet>
